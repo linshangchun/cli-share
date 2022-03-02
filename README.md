@@ -1,45 +1,46 @@
-## description
+### cli-share 共享子仓库
 
-本地项目(文件)管理工具
+> 用于 cli 相关仓库的共享子仓库，技术原理: git subtree
+> repo 地址: https://github.com/linshangchun/cli-share
 
-## dev-time
-
-```
->git clone xxx/repo-name
->cd repo-name
->yarn
->yarn build
->yarn link
->it or it -h
-```
-
-## play-time
+### 父仓库配置管理命令
 
 ```
-安装：
-    >npm i -g @lshch-cli/item
-or  >yarn global add add @lshch-cli/item
-
-测试：
-    >it
-or  >it -h
-添加项目:
-    >cd your-folder && it add <alisa>
-    >it your-alisa(defaule: code open your-alisa-path)
-查看项目:
-    >it view your-alisa
-编辑项目:
-    >it set your-alisa [-n,-a,-d,-t,-h]
-or  >it edit data(defaule: code open your-all-item-data)
-删除项目:
-    >it del your-alisa
-
-默认说明：
-1、打开项目[it alisa]或编辑所有项目[it edit data]时，默认使用vscode编辑器,也可设置idea或其他编辑器：it conf -e [idea|webstore|other-edit-cmd]
-2、系统文件管理器打开项目[it open alisa]时，默认执行[open alisa-path]命令,如果是Windows或想使用其他方式打开项目可设置：it conf -o [start|other-open-way]
-
+  git remote add cli-share git@github.com:linshangchun/cli-share.git
+  git remote set-url cli-share git@github.com:linshangchun/cli-share.git
+  git subtree add --prefix=src/share cli-share  master --squash
+  git subtree push --prefix=src/share cli-share  master --squash
+  git subtree pull --prefix=src/share cli-share  master --squash
 ```
 
-## publish-time
+### 文件目录划分
 
-@lshch-cli/item 【https://registry.npmjs.org】
+share 共享文件夹
+
+- script 公享脚本
+- utils 共享函数
+
+### 依赖库包
+
+系统模块
+
+- path
+- fs
+- os
+
+三方模块
+
+- yaml
+- clipboardy
+- chalk
+- boxen
+
+### 特别注意 ！！！
+
+- share 文件夹下面的内容修改时一定要考虑验证修改前的兼容性
+- 当存在破坏性的修改优化时，所有关联的父仓库一定要同时 pull 更新测试
+
+### 已引用子仓库的父仓库
+
+- https://github.com/linshangchun/cli-item
+- https://github.com/linshangchun/yourl
